@@ -15,10 +15,10 @@ public class EdgeConvertFileParserTest {
   private FileReader fr;
   private BufferedReader br;
   private String fileName = "./Courses.edg";
-  private ArrayList figure1IntArray = new ArrayList();
-  private ArrayList figure2IntArray = new ArrayList();
-  private ArrayList figure1TableIntArray = new ArrayList();
-  private ArrayList figure2TableIntArray = new ArrayList();
+  private ArrayList<Integer> figure1IntArray = new ArrayList<Integer>();
+  private ArrayList<Integer> figure2IntArray = new ArrayList<Integer>();
+  private ArrayList<Integer> figure1TableIntArray = new ArrayList<Integer>();
+  private ArrayList<Integer> figure2TableIntArray = new ArrayList<Integer>();
 
   
   private void getTablesandFieldAmounts() {
@@ -69,9 +69,9 @@ public class EdgeConvertFileParserTest {
 	line = br.readLine().trim();
 	line = br.readLine().trim();
 	line = br.readLine().trim();
-	int tempFigure1Int = new Integer(line.substring(line.indexOf(" ") + 1));
+	int tempFigure1Int = Integer.parseInt(line.substring(line.indexOf(" ") + 1));
 	line = br.readLine().trim();
-	int tempFigure2Int = new Integer(line.substring(line.indexOf(" ") + 1));
+	int tempFigure2Int = Integer.parseInt(line.substring(line.indexOf(" ") + 1));
 	line = br.readLine().trim();
 	line = br.readLine().trim();
 	line = br.readLine().trim();
