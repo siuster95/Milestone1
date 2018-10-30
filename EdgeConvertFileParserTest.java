@@ -19,9 +19,10 @@ public class EdgeConvertFileParserTest {
   private ArrayList<Integer> figure2IntArray = new ArrayList<Integer>();
   private ArrayList<Integer> figure1TableIntArray = new ArrayList<Integer>();
   private ArrayList<Integer> figure2TableIntArray = new ArrayList<Integer>();
-
+  private ArrayList<String> fieldNames = new ArrayList<String>();
+  private ArrayList<String> tableNames = new ArrayList<String>();
   
-  private void getTablesandFieldAmounts() {
+  private void getTablesandFieldNames() {
     // Find all the entity and Field items in the EDG
     // file
   File file = new File(fileName);
@@ -36,14 +37,22 @@ public class EdgeConvertFileParserTest {
     line = br.readLine().trim();
     if (line.contains("Style")) {
       if (line.contains("Entity")) {
-	// if the Figure is an Entity, add one to the
-	// amount of Tables
-	numberOfTables = numberOfTables + 1;
+	// if the Figure is an Entity, save that Name
+	// into Table names
+	line = br.readLine().trim();
+	String[] tempStringArray = line.split(" ");
+	tempStringArray[1] = tempStringArray[1].replace("\"", "");
+	tableNames.add(tempStringArray[1]);
+
+	
       } 
       else if (line.contains("Attribute")) {
-	// if the Figures is an Attribute, add one to
-	// the amount of Fields
-	numberOfFields = numberOfFields + 1;
+	// if the Figures is an Attribute, add the name
+	// to the fieldTables
+	line = br.readLine().trim();
+	String[] tempStringArray = line.split(" ");
+	tempStringArray[1] = tempStringArray[1].replace("\"", "");
+	fieldNames.add(tempStringArray[1]);
       }
      }
     }
@@ -112,24 +121,47 @@ public class EdgeConvertFileParserTest {
 
   }
   // Test to test that the parser is able to parse Edge
-  // Tables from EDG File
+  // Tables from EDG File by seeing that the names of
+  // the entities are the names of the edge Tables
   @Test
   public void testGetEdgeTables () {
   File file = new File(fileName);
   EdgeConvertFileParser Converter = new EdgeConvertFileParser(file);
-  getTablesandFieldAmounts();
-  EdgeTable[] edgeTables = Converter.getEdgeTables();
-  assertEquals(numberOfTables, edgeTables.length);
+  getTablesandFieldNames();
+  EdgeTable[] edgeTables = Converter.getEdgeTables(); 
+  for(int x =0; x < tableNames.size(); x++) {
+    String expected = tableNames.get(x);
+    boolean tableExists = false;
+    for (int y =0; y < edgeTables.length; y++) {
+	if (edgeTables[y].getName().equals(expected)) {
+	tableExists = true;
+	}
+      }
+    assertEquals(true, tableExists);
+    }
+  
+  
   }
   // Test to test that the parser is able to parse the
-  // Edge Fields from EDG File
+  // Edge Fields from EDG File by seeing that the names
+  // of the attributes are the names of the Edge Fields
   @Test
   public void testGetEdgeFields () {
   File file = new File(fileName);
   EdgeConvertFileParser Converter = new EdgeConvertFileParser(file);
-  getTablesandFieldAmounts();
+  getTablesandFieldNames();
   EdgeField[] edgeFields = Converter.getEdgeFields();
-  assertEquals(numberOfFields, edgeFields.length);
+  for(int x =0; x < fieldNames.size(); x++) {
+    String expected = fieldNames.get(x);
+    boolean fieldExists = false;
+    for (int y =0; y < edgeFields.length; y++) {
+    if (edgeFields[y].getName().equals(expected)) {
+      fieldExists = true;
+      }
+    }
+    assertEquals(true, fieldExists);
+  }
+  
   }
 
   // Test to test that the parser is able to parse the
