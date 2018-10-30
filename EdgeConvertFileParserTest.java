@@ -22,8 +22,8 @@ public class EdgeConvertFileParserTest {
 
   
   private void getTablesandFieldAmounts() {
-    // I am going to make sure that it finds all the
-    // entities in the file
+    // Find all the entity and Field items in the EDG
+    // file
   File file = new File(fileName);
   try {
   fr = new FileReader(file);
@@ -56,6 +56,9 @@ public class EdgeConvertFileParserTest {
     System.out.println(ioe);
   }
   }
+  // Saves the Connections combinations into two arrays
+  // depending on whether or not it is table to field or
+  // table to table
   private void getTableandFieldNumfromConnectors() {
   
     File file = new File(fileName);
@@ -190,7 +193,9 @@ public class EdgeConvertFileParserTest {
 	}
       }
     }
-
+    // if figure 1 is a Table, check that figure 2 is in
+    // the NativeField array of the table and that the
+    // Figure 1 is the int in the edgeFields tableID
     if (figure1isTable) {
       int[] fieldsinTable = edgeTable.getNativeFieldsArray();
       boolean isinfieldTable = false;
@@ -201,7 +206,7 @@ public class EdgeConvertFileParserTest {
       }
       assertEquals(true, isinfieldTable);
       assertEquals(Figure1, edgeField.getTableID());
-
+      // Vice versa from above
     } else if (figure2isTable) {
       int[] fieldsinTable = edgeTable.getNativeFieldsArray();
       boolean isinfieldTable = false;
@@ -237,6 +242,8 @@ public class EdgeConvertFileParserTest {
       EdgeTable edgeTable2;
       boolean isIntable1 = false;
       boolean isIntable2 = false;
+      // find both tables from the 2 numFigures and see
+      // if the other is in the relatedTablesArray
       for (int h =0; h < edgeTables.length; h++) {
       if (edgeTables[h].getNumFigure() == numFigForTable1) {
 	edgeTable1 = edgeTables[h];
