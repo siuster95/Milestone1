@@ -2,6 +2,7 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import java.io.*;
+
 public class MainTester{
 
 
@@ -80,11 +81,25 @@ if (commandBool == false && fileBool == false)
 }
 Result result = junitCore.runClasses(NewEdgeFieldTest.class);
 Result result2 = junitCore.runClasses(NewEdgeTableTest.class);
-System.out.println(result.wasSuccessful());
-System.out.println(result2.wasSuccessful());
+
+boolean test1 = result.wasSuccessful();
+boolean test2 = result2.wasSuccessful();
+if (test1 == true && test2 == true)
+{
+  System.out.println("All test have passed");
+}
+else 
+{
+  System.out.println("test 1 failures: ");
+  for (Failure failure : result.getFailures()) {
+    System.out.println(failure.getMessage());
+    System.out.println(failure.getTrace());
+  }
+  System.out.println("test 2 failures: ");
   for (Failure failure : result2.getFailures()) {
-   // System.out.println(failure.getMessage());
-   // System.out.println(failure.getTrace());
+    System.out.println(failure.getMessage());
+    System.out.println(failure.getMessage());
+  }
 }
 }
 else  if (helpBool == true)
