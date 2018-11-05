@@ -68,6 +68,7 @@ if (commandBool == false && fileBool == false)
     {
       TestObj2 = line;
     }
+    x = x + 1;
   }
   }
   catch (FileNotFoundException ex) {
