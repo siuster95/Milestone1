@@ -995,8 +995,9 @@ public class EdgeConvertGUI {
             if (!resultFiles[i].getName().endsWith(".class")) {
                continue; //ignore all files that are not .class files
             }
-            resultClass = Class.forName(resultFiles[i].getName().substring(0, resultFiles[i].getName().lastIndexOf(".")));
-            if (resultClass.getSuperclass().getName().equals("EdgeConvertCreateDDL")) { //only interested in classes that extend EdgeConvertCreateDDL
+            String className = "com.example.finalproject422." + resultFiles[i].getName().substring(0, resultFiles[i].getName().lastIndexOf("."));
+            resultClass = Class.forName(className);
+            if (resultClass.getSuperclass().getName().equals("com.example.finalproject422.EdgeConvertCreateDDL")) { //only interested in classes that extend EdgeConvertCreateDDL
                if (parseFile == null && saveFile == null) {
                   conResultClass = resultClass.getConstructor(paramTypesNull);
                   } else {
