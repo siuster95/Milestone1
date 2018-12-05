@@ -995,8 +995,7 @@ public class EdgeConvertGUI {
             if (!resultFiles[i].getName().endsWith(".class")) {
                continue; //ignore all files that are not .class files
             }
-            String className = "com.example.finalproject422." + resultFiles[i].getName().substring(0, resultFiles[i].getName().lastIndexOf("."));
-            resultClass = Class.forName(className);
+            resultClass = Class.forName("com.example.finalproject422." + resultFiles[i].getName().substring(0, resultFiles[i].getName().lastIndexOf(".")));
             if (resultClass.getSuperclass().getName().equals("com.example.finalproject422.EdgeConvertCreateDDL")) { //only interested in classes that extend EdgeConvertCreateDDL
                if (parseFile == null && saveFile == null) {
                   conResultClass = resultClass.getConstructor(paramTypesNull);
@@ -1159,16 +1158,17 @@ public class EdgeConvertGUI {
    
    class CreateDDLButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent ae) {
-         while (outputDir == null) {
+         if (outputDir == null) {
             JOptionPane.showMessageDialog(null, "You have not selected a path that contains valid output definition files yet.\nPlease select a path now.");
             setOutputDir();
+         } else{
+            getOutputClasses(); //in case outputDir was set before a file was loaded and EdgeTable/EdgeField objects created
+            sqlString = getSQLStatements();
+            if (sqlString.equals(EdgeConvertGUI.CANCELLED)) {
+               return;
+            }
+            writeSQL(sqlString);
          }
-         getOutputClasses(); //in case outputDir was set before a file was loaded and EdgeTable/EdgeField objects created
-         sqlString = getSQLStatements();
-         if (sqlString.equals(EdgeConvertGUI.CANCELLED)) {
-            return;
-         }
-         writeSQL(sqlString);
       }
    }
 
