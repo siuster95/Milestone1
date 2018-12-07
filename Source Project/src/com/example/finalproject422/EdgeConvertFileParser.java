@@ -131,8 +131,6 @@ public class EdgeConvertFileParser {
    } // parseEdgeFile()
    
    private void resolveConnectors() { //Identify nature of Connector endpoints
-      //int endPoint1, endPoint2;
-      //int fieldIndex = 0, table1Index = 0, table2Index = 0;
       for (int cIndex = 0; cIndex < connectors.length; cIndex++) {
          connectors[cIndex].resolveConnectors(fields, tables, parseFile.getName());
       } // connectors for() loop
