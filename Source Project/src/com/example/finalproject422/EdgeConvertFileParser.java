@@ -85,19 +85,8 @@ public class EdgeConvertFileParser {
                   }
                } while (!currentLine.equals("}")); // this is the end of a Figure entry
                
-               if (isEntity) { //create a new com.example.finalproject422.EdgeTable object and add it to the alTables ArrayList
-                  if (isTableDup(text)) {
-                     JOptionPane.showMessageDialog(null, "There are multiple tables called " + text + " in this diagram.\nPlease rename all but one of them and try again.");
-                     EdgeConvertGUI.setReadSuccess(false);
-                     break;
-                  }
-                  alTables.add(new EdgeTable(numFigure + DELIM + text));
-               }
-               if (isAttribute) { //create a new com.example.finalproject422.EdgeField object and add it to the alFields ArrayList
-                  tempField = new EdgeField(numFigure + DELIM + text);
-                  tempField.setIsPrimaryKey(isUnderlined);
-                  alFields.add(tempField);
-               }
+                makeEdgeTablesandEdgeField();
+
                //reset flags
                isEntity = false;
                isAttribute = false;
@@ -216,6 +205,23 @@ public class EdgeConvertFileParser {
          }
       }
       return false;
+   }
+
+   private void makeEdgeTablesandEdgeField ()
+   {
+       if (isEntity) { //create a new com.example.finalproject422.EdgeTable object and add it to the alTables ArrayList
+           if (isTableDup(text)) {
+               JOptionPane.showMessageDialog(null, "There are multiple tables called " + text + " in this diagram.\nPlease rename all but one of them and try again.");
+               EdgeConvertGUI.setReadSuccess(false);
+               return;
+           }
+           alTables.add(new EdgeTable(numFigure + DELIM + text));
+       }
+       if (isAttribute) { //create a new com.example.finalproject422.EdgeField object and add it to the alFields ArrayList
+           tempField = new EdgeField(numFigure + DELIM + text);
+           tempField.setIsPrimaryKey(isUnderlined);
+           alFields.add(tempField);
+       }
    }
    
    public EdgeTable[] getEdgeTables() {
