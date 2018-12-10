@@ -3,6 +3,7 @@ package com.example.finalproject422;
 import java.util.*;
 
 public class EdgeTable {
+
    private int numFigure;
    private String name;
    private ArrayList alRelatedTables, alNativeFields;
